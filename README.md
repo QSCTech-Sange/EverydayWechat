@@ -137,7 +137,7 @@ itchat.send(today_msg, toUserName=name_uuid)
 ## 项目运行
 ### 使用Docker  
 
-```python
+```shell
 sudo docker build -t everydaywechat .
 sudo docker run --name girlfriend_01 everydaywechat
 # 扫码登陆
@@ -151,7 +151,7 @@ Ctrl+P+Q 退出容器
 
 #### 参数配置
 config.yaml
-```python
+```yaml
 # 定时时间
 alarm_timed: '9:30'
 
@@ -181,7 +181,7 @@ girlfriend_infos:
 ```
 
 #### 开始运行
-```python
+```shell
 screen -S girlfriend
 python run.py
 Ctrl+A+D 退出Screen窗口
