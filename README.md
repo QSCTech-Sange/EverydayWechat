@@ -47,7 +47,7 @@ Github: [https://github.com/sfyc23/EverydayWechat](https://github.com/sfyc23/Eve
 
 #### 1.定时任务。
 每天 9：30 给女朋友们开始给女朋友发送内容。
-```
+```python
 # 定时任务
 scheduler = BlockingScheduler()
 # 每天9：30给女朋友发送每日一句
@@ -58,7 +58,7 @@ scheduler.start()
 
 #### 2.获取每日一句。
 数据来源 1： [ONE●一个][6]
-```
+```python
 def get_dictum_info(self):
     '''
     获取格言信息（从『一个。one』获取信息 http://wufazhuce.com/）
@@ -81,7 +81,7 @@ def get_dictum_info(self):
 > 等你获得真正属于你的幸福之后，你就会明白一起的伤痛其实是一种财富，它让你学会更好地去把握和珍惜你爱的人。
 
 代码实现 ：
-```
+```python
  def get_ciba_info(self):
     '''
     从词霸中获取每日一句，带英文。
@@ -98,10 +98,24 @@ def get_dictum_info(self):
         print("没有获取到数据")
         return None
 ```
+数据来源3： [土味情话](https://api.lovelive.tools/api/SweetNothings)
+
+```python
+def get_lovelive_info(self):
+    '''
+    从土味情话中获取每日一句。
+    '''
+    resp = requests.get("https://api.lovelive.tools/api/SweetNothings")
+    return resp.text + "\n"
+```
+
+
+
 #### 3. 获取今日天气 。
+
 天气数据来源：[SOJSON][7]
 
-```
+```python
 def get_weather_info(self, city_code=''）：
     weather_url = f'http://t.weather.sojson.com/api/weather/city/{city_code}'
     resp = requests.get(url=weather_url)
@@ -114,7 +128,7 @@ city_code 城市对应 id。
 [http://cdn.sojson.com/_city.json](http://cdn.sojson.com/_city.json)
 
 #### 4. 登录微信并发送内容。
-```
+```python
 itchat.auto_login()
 itchat.send(today_msg, toUserName=name_uuid)
 ```
@@ -123,12 +137,12 @@ itchat.send(today_msg, toUserName=name_uuid)
 ## 项目运行
 ### 使用Docker  
 
-```
+```python
 sudo docker build -t everydaywechat .
 sudo docker run --name girlfriend_01 everydaywechat
 # 扫码登陆
 Ctrl+P+Q 退出容器  
-```  
+```
 ### 使用Screen
 
 #### 安装依赖
@@ -137,13 +151,14 @@ Ctrl+P+Q 退出容器
 
 #### 参数配置
 config.yaml
-```
+```python
 # 定时时间
 alarm_timed: '9:30'
 
 # 格言渠道
 # 1 : ONE●一个
 # 2 : 词霸（每日英语）
+# 3 : 土味情话
 dictum_channel: 2
 
 girlfriend_infos:
@@ -166,7 +181,7 @@ girlfriend_infos:
 ```
 
 #### 开始运行
-```
+```python
 screen -S girlfriend
 python run.py
 Ctrl+A+D 退出Screen窗口
@@ -177,10 +192,10 @@ Ctrl+A+D 退出Screen窗口
 写完后才发现，我并没有女朋友啊！
 
 
-  [1]: https://juejin.im/post/5c77c6bef265da2de6611cff
-  [2]: https://github.com/littlecodersh/ItChat
-  [3]: http://docs.python-requests.org/en/master/
-  [4]: https://www.crummy.com/software/BeautifulSoup/bs4/doc/index.zh.html#
-  [5]: https://apscheduler.readthedocs.io/en/latest/
-  [6]: http://wufazhuce.com/
-  [7]: https://www.sojson.com/blog/305.html
+[1]: https://juejin.im/post/5c77c6bef265da2de6611cff
+[2]: https://github.com/littlecodersh/ItChat
+[3]: http://docs.python-requests.org/en/master/
+[4]: https://www.crummy.com/software/BeautifulSoup/bs4/doc/index.zh.html#
+[5]: https://apscheduler.readthedocs.io/en/latest/
+[6]: http://wufazhuce.com/
+[7]: https://www.sojson.com/blog/305.html
